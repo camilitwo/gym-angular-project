@@ -1,0 +1,35 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+  <div class="form-group">
+  <select class="form-control-sm" id="dia" [(ngModel)]="selectedDay" (change)="mostrarRutina()">
+    <option *ngFor="let dia of diasSemana" [value]="dia">{{ dia }}</option>
+  </select>
+</div>
+
+<div *ngIf="filteredExercises.length > 0" class="tarjeta-rutina">
+  <h2 class="rutina-header">Rutina de Ejercicios para {{ selectedDay }}</h2>
+  <div class="ejercicios-container">
+    <div class="ejercicio-card" *ngFor="let ejercicio of filteredExercises" [class.completed]="ejercicio.completado">
+      <div class="ejercicio-header">
+        <h4 [class.ejercicio-nombre]="!ejercicio.completado">{{ ejercicio.nombre }}</h4>
+        <i class="fas fa-info-circle" (click)="mostrarExplicacion(ejercicio.explicacion)"></i>
+      </div>
+      <div class="ejercicio-body" (click)="ejercicio.completado ? marcarEjercicioNoRealizado(ejercicio) : marcarEjercicioRealizado(ejercicio)">
+        <p class="detalle-item"><span>Series:</span> {{ ejercicio.series }}</p>
+        <p class="detalle-item"><span>Repeticiones:</span> {{ ejercicio.repeticiones }}</p>
+      </div>
+      <i class="fa fa-check-circle" [ngClass]="{'completado': ejercicio.completado}" (click)="ejercicio.completado ? marcarEjercicioNoRealizado(ejercicio) : marcarEjercicioRealizado(ejercicio)"></i>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="filteredExercises.length === 0 && selectedDay">
+  <p>No se encontró una rutina de ejercicios para {{ selectedDay }}</p>
+
+</div>
+
+
+<app-footer-home></app-footer-home>
+

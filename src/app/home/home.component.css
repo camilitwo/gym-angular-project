@@ -1,0 +1,114 @@
+.rutina-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+.ejercicios-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.ejercicio-card {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ejercicio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.ejercicio-nombre {
+  font-size: 18px;
+  margin: 0;
+}
+
+.fa-info-circle {
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.fa-info-circle:hover {
+  color: #555;
+}
+
+.ejercicio-body {
+  margin-top: 10px;
+}
+
+.detalle-item {
+  margin: 5px 0;
+}
+
+.detalle-item span {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.ejercicio-card.completed {
+  background-color: #e1e1e1;
+}
+
+.ejercicio-card.completed .ejercicio-nombre {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.tarjeta-rutina {
+  background-color: #f2f2f2; /* Color de fondo para la tarjeta */
+  border-radius: 8px; /* Borde redondeado */
+  padding: 16px; /* Espaciado interno */
+  margin-top: 40px;
+}
+
+.ejercicio-card {
+  background-color: #ffffff; /* Color de fondo para cada tarjeta de ejercicio */
+  border-radius: 8px; /* Borde redondeado */
+  padding: 16px; /* Espaciado interno */
+  margin-bottom: 16px; /* Espaciado inferior entre tarjetas */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.ejercicio-card.completed {
+  background-color: #b0b3af; /* Color de fondo para la tarjeta de ejercicio completado */
+  text-decoration: line-through; /* Tacha el texto del ejercicio completado */
+}
+
+.ejercicio-header {
+  display: flex; /* Mostrar el título del ejercicio y el ícono en línea */
+  align-items: center; /* Alinear verticalmente el título y el ícono */
+  justify-content: space-between; /* Espacio entre el título y el ícono */
+}
+
+.ejercicio-nombre {
+  color: #555555; /* Color de texto para el nombre del ejercicio no completado */
+}
+
+.detalle-item {
+  margin-bottom: 8px; /* Espaciado inferior entre elementos del detalle */
+}
+
+/* Estilos para el ícono de información */
+.fa-info-circle {
+  color: #999999; /* Color del ícono de información */
+  font-size: 18px; /* Tamaño del ícono */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+/* Estilos para el ícono de marca de verificación */
+.fa-check-circle {
+  color: #55c04f; /* Color del ícono de marca de verificación */
+  font-size: 18px; /* Tamaño del ícono */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+.completado {
+  color: gray; /* Cambiar a tu color deseado */
+}
