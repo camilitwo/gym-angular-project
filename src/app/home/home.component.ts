@@ -14,10 +14,18 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
 
+
+
   ngOnInit(): void {
     this.selectedDay = this.getCurrentDay();
     this.mostrarRutina();
   }
+
+  //labels and titles
+  titleCard = "Rutina Día ";
+  series = "Series: ";
+  repetitions = "Repeticiones: ";
+  explication = "Explicación: ";
 
   getCurrentDay(): string {
     const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
@@ -414,11 +422,23 @@ export class HomeComponent implements OnInit {
         this.filteredExercises = selectedRoutine.ejercicios;
       } else {
         this.filteredExercises = [];
-        Swal.fire({
-          title: 'No se encontró información',
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
           icon: 'error',
-          confirmButtonText: 'Cerrar'
-        });
+          title: 'No se encontró información'
+        })
       }
     } else {
       this.filteredExercises = [];
