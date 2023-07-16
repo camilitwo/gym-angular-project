@@ -1,6 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { HttpClient } from '@angular/common/http';
+
+interface Rutina {
+  dia: string;
+  nombre: string;
+  ejercicios: Ejercicio[];
+}
+
+interface Ejercicio {
+  nombre: string;
+  series: number;
+  repeticiones: string;
+  explicacion: string;
+  completado?: boolean;
+}
 
 @Component({
   selector: 'app-home',
@@ -8,50 +22,65 @@ import Swal from 'sweetalert2';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  titleCard = 'Rutina Día ';
+  series = 'Series: ';
+  repetitions = 'Repeticiones: ';
+  explication = 'Explicación: ';
+
+  diasSemana: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  selectedDay: string | undefined;
+  exerciseRoutine: Rutina[] = [];
+  filteredExercises: Ejercicio[] = [];
+
   constructor(private http: HttpClient) {}
 
-  titleCard = "Rutina Día ";
-  series = "Series: ";
-  repetitions = "Repeticiones: ";
-  explication = "Explicación: ";
+  ngOnInit(): void {
+    this.selectedDay = this.getCurrentDay();
+    this.getExerciseRoutine();
+  }
 
   getCurrentDay(): string {
-    const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+    const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
     const currentDate = new Date();
     return daysOfWeek[currentDate.getDay() - 1];
   }
 
-  exerciseRoutine: any[] = [];
-
-  dietaJSON = {
-    // ... Resto del código de la dietaJSON ...
-  };
-
-  diasSemana: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-  selectedDay: string | undefined;
-  filteredExercises: any[] = [];
-
-  ngOnInit(): void {
-    this.selectedDay = this.getCurrentDay();
-    this.mostrarRutina();
-    this.obtenerEjercicioJSON();
+  getExerciseRoutine(): void {
+    this.http.get<Rutina[]>('https://gym-back-p2yr.onrender.com/rutinas').subscribe(
+      (data: Rutina[]) => {
+        this.exerciseRoutine = data;
+        this.filterExercises();
+      },
+      (error) => {
+        console.error('Error al obtener las rutinas:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo obtener la rutina',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    );
   }
 
-  mostrarRutina() {
+  filterExercises(): void {
     if (this.selectedDay) {
       const selectedRoutine = this.exerciseRoutine.find((routine) => routine.dia === this.selectedDay);
       if (selectedRoutine) {
         this.filteredExercises = selectedRoutine.ejercicios;
       } else {
         this.filteredExercises = [];
-        this.mostrarError();
       }
     } else {
       this.filteredExercises = [];
     }
   }
 
-  mostrarExplicacion(explicacion: string) {
+  mostrarRutina(): void {
+    this.filterExercises();
+  }
+
+  mostrarExplicacion(explicacion: string): void {
     Swal.fire({
       title: 'Explicación del ejercicio',
       text: explicacion,
@@ -60,45 +89,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  marcarEjercicioRealizado(ejercicio: any) {
+  marcarEjercicioRealizado(ejercicio: Ejercicio): void {
     ejercicio.completado = true;
   }
 
-  marcarEjercicioNoRealizado(ejercicio: any) {
+  marcarEjercicioNoRealizado(ejercicio: Ejercicio): void {
     ejercicio.completado = false;
-  }
-
-  obtenerEjercicioJSON() {
-    const url = 'https://gym-back-p2yr.onrender.com/rutinas'; // Reemplaza con la URL de tu API
-
-    this.http.get(url).subscribe(
-      (response: any) => {
-        this.exerciseRoutine = response.ejercicios;
-        this.mostrarRutina();
-      },
-      (error: any) => {
-        console.error(error);
-        this.mostrarError();
-      }
-    );
-  }
-
-  mostrarError() {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-      }
-    });
-
-    Toast.fire({
-      icon: 'error',
-      title: 'No se encontró información'
-    });
   }
 }
