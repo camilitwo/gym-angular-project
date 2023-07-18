@@ -15,12 +15,16 @@
         <h4 [class.ejercicio-nombre]="!ejercicio.completado">{{ ejercicio.nombre }}</h4>
         <i class="fas fa-info-circle" (click)="mostrarExplicacion(ejercicio.explicacion)"></i>
       </div>
-      <div class="ejercicio-body" (click)="ejercicio.completado ? marcarEjercicioNoRealizado(ejercicio) : marcarEjercicioRealizado(ejercicio)">
+      <!-- Add the weight and update date display -->
+      <p class="detalle-item"><span>{{weight}}</span> {{ ejercicio.peso }}</p>
+      <p class="detalle-item"><span>Última actualización:</span> {{ ejercicio.fechaActualizacion | date:'medium' }}</p>
+
+      <!-- Update the click event handlers -->
+      <div class="ejercicio-body">
         <p class="detalle-item"><span>{{series}}</span> {{ ejercicio.series }}</p>
         <p class="detalle-item"><span>{{repetitions}}</span> {{ ejercicio.repeticiones }}</p>
       </div>
       <i class="fa fa-check-circle" [ngClass]="{'completado': ejercicio.completado}" (click)="ejercicio.completado ? marcarEjercicioNoRealizado(ejercicio) : marcarEjercicioRealizado(ejercicio)"></i>
-
     </div>
   </div>
 </div>

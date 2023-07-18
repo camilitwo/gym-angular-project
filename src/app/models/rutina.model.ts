@@ -9,5 +9,6 @@ export interface Rutina {
     series: number;
     repeticiones: string;
     explicacion: string;
+    peso: string;
   }
   
