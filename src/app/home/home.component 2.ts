@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
+<<<<<<< HEAD
 import { HttpHeaders } from '@angular/common/http';
+=======
+>>>>>>> origin/master
 
 interface Rutina {
   dia: string;
@@ -14,10 +17,14 @@ interface Ejercicio {
   series: number;
   repeticiones: string;
   explicacion: string;
+<<<<<<< HEAD
   peso: string;
   fechaActualizacion: Date;      // Add this property
   completado?: boolean;
   _id?: string;
+=======
+  completado?: boolean;
+>>>>>>> origin/master
 }
 
 @Component({
@@ -30,7 +37,10 @@ export class HomeComponent implements OnInit {
   series = 'Series: ';
   repetitions = 'Repeticiones: ';
   explication = 'Explicación: ';
+<<<<<<< HEAD
   weight = 'Peso: ';
+=======
+>>>>>>> origin/master
 
   diasSemana: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
   selectedDay: string | undefined;
@@ -94,7 +104,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> origin/master
   marcarEjercicioRealizado(ejercicio: Ejercicio): void {
     ejercicio.completado = true;
   
